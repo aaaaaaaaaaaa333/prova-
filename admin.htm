@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="stile.css">
+
+    <title>Verifica Password</title>
+    <script>
+        function verificaPassword() {
+            const passwordCorretta = "arena";
+            const passwordInserita = document.getElementById("password").value;
+
+            if (passwordInserita === passwordCorretta) {
+                // Reindirizza alla pagina corretta
+                window.location.href = "registro.htm"; // Sostituisci con l'URL della pagina corretta
+            } else {
+                // Reindirizza alla pagina sbagliata
+                window.location.href = "index.htm"; // Sostituisci con l'URL della pagina sbagliata
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container1">
+    <h2>INRODUCE TU CONTRASEÑA</h2>
+    <input type="password" id="password" placeholder="Contraseña">
+    <button onclick="verificaPassword()">Enviar</button>
+    </div>
+</body>
+</html>

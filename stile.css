@@ -1,0 +1,84 @@
+body {
+    font-family: 'Rajdhani', sans-serif;
+    display: flex;
+    flex-direction: column; /* Dispone gli elementi in colonna */
+    justify-content: center; /* Centra verticalmente */
+    align-items: center; /* Centra orizzontalmente */
+    height: 100vh;
+    margin: 0;
+    color: white;
+    background-color: #0c315c;
+    background-image: url('omar.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+
+
+h2 {
+    color: #66388b;
+    text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.3);
+    font-size: 55px;
+}
+
+input {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    background: #222;
+    color: white;
+    outline: none;
+    transition: 0.3s;
+}
+
+input:focus {
+    background: #333;
+    box-shadow: 0 0 10px #4a0980;
+}
+
+button {
+    background: linear-gradient(45deg, #ff0000, #ff7300);
+    color: white;
+    border: none;
+    padding: 12px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: linear-gradient(45deg, #ff7300, #4a0980);
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(255, 204, 0, 0.5);
+}
+
+#img1 {
+    margin-top: 200px; /* Distanza tra il container e l'immagine */
+    background-position: center;
+ 
+}
+.container {
+    background: rgba(0, 0, 0, 0.8);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+    text-align: center;
+    width: 450px;
+    /*margin-bottom: -180px*/
+    margin-top: 200px;;
+}
+.container1 {
+    background: rgba(0, 0, 0, 0.8);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+    text-align: center;
+    width: 450px;
+    /*margin-bottom: -180px*/
+    margin-top:  50px;;
+}

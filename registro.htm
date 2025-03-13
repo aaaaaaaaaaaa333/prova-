@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro Iscritti</title>
+    <link rel="stylesheet" href="stile.css">
+</head>
+<body>
+    <div class="container1">
+        <h2>LISTA DE INSCRITOS</h2>
+        <ul id="userList"></ul>
+
+        <!-- Aggiungi un pulsante per resettare la lista -->
+        <button id="resetButton">Reset Lista</button>
+    </div>
+
+    <script>
+        // Recupera i dati dal localStorage
+        let users = JSON.parse(localStorage.getItem("users")) || [];
+
+        // Ottieni il riferimento alla lista
+        let userList = document.getElementById("userList");
+
+        // Funzione per aggiornare la lista degli utenti
+        function updateUserList() {
+            // Svuota la lista esistente
+            userList.innerHTML = '';
+
+            // Aggiungi gli utenti alla lista
+            if (users.length === 0) {
+                userList.innerHTML = "<li>Ningún usuario registrado</li>";  // Messaggio se nessun utente è registrato
+            } else {
+                users.forEach(function(user) {
+                    let listItem = document.createElement("li");
+                    listItem.textContent = `Username: ${user.username}, Email: ${user.email}`;
+                    userList.appendChild(listItem);
+                });
+            }
+        }
+
+        // Inizializza la lista degli utenti
+        updateUserList();
+
+        // Aggiungi un evento al pulsante di reset
+        document.getElementById("resetButton").addEventListener("click", function() {
+            // Rimuove gli utenti dal localStorage
+            localStorage.removeItem("users");
+
+            // Rinfresca la lista degli utenti
+            users = [];
+            updateUserList();
+        });
+    </script>
+</body>
+</html>
