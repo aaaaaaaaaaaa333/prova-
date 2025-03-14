@@ -1,19 +1,24 @@
-async function cargarUsuarios() {
-    const querySnapshot = await getDocs(collection(db, "users"));
-    const userList = document.getElementById("userList");
-    userList.innerHTML = ""; // Vacía la lista antes de agregar
+// Gestione della registrazione
+document.getElementById("registrationForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const username = document.getElementById("username").value;
+    const email = document.getElementById("email").value;
 
-    if (querySnapshot.empty) {
-        console.log("Nessun utente trovato in Firestore.");
-        return;
+    try {
+        // Salva i dati in Firestore
+        const docRef = await addDoc(collection(db, "users"), {
+            username: username,
+            email: email,
+            timestamp: new Date()
+        });
+
+        console.log("Document written with ID: ", docRef.id); // Stampa l'ID del documento creato
+        console.log("Dati salvati: ", { username, email }); // Verifica i dati salvati
+
+        alert("Registrazione completata!");
+        document.getElementById("registrationForm").reset();
+        cargarUsuarios(); // Ricarica la lista dopo aver aggiunto l'utente
+    } catch (error) {
+        alert("Errore: " + error.message);
     }
-
-    querySnapshot.forEach((doc) => {
-        const userData = doc.data();
-        console.log(userData); // Stampa i dati ricevuti per il debug
-
-        const li = document.createElement("li");
-        li.textContent = `Username: ${userData.username || "No data"}, Email: ${userData.email || "No data"}`;
-        userList.appendChild(li);
-    });
-}
+});
