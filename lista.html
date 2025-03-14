@@ -16,7 +16,7 @@
     <script type="module">
         // Importa Firebase
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
-        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
+        import { getFirestore, collection, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
 
         // Configurazione Firebase
         const firebaseConfig = {
@@ -49,12 +49,16 @@
         // Carica gli utenti all'avvio
         loadUsers();
 
-        // Pulsante per resettare la lista (opzionale)
+        // Funzione per resettare la lista
         document.getElementById("resetButton").addEventListener("click", async () => {
             const confirmReset = confirm("Sei sicuro di voler resettare la lista?");
             if (confirmReset) {
-                // Puoi implementare la logica per rimuovere gli utenti da Firestore qui
-                alert("Reset della lista non implementato!"); // Placeholder
+                const querySnapshot = await getDocs(collection(db, "users"));
+                querySnapshot.forEach(async (userDoc) => {
+                    await deleteDoc(doc(db, "users", userDoc.id));
+                });
+                alert("Lista resettata con successo!");
+                loadUsers(); // Ricarica la lista per riflettere le modifiche
             }
         });
     </script>
