@@ -1,29 +1,30 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accesso Admin</title>
+    <title>Acceso Admin</title>
     <link rel="stylesheet" href="stile.css">
 </head>
 <body>
     <div class="container1">
-        <h2>INTRODUCI LA TUA PASSWORD</h2>
-        <input type="password" id="password" placeholder="Password">
-        <button onclick="verificaPassword()">Invia</button>
+        <h2>INTRODUCE TU CONTRASEÑA</h2>
+        <input type="password" id="password" placeholder="Contraseña">
+        <button onclick="verificarContrasena()">Enviar</button>
     </div>
 
     <script>
-        function verificaPassword() {
-            const passwordCorretta = "arena"; // Cambia con la tua password
-            const passwordInserita = document.getElementById("password").value;
+        function verificarContrasena() {
+            const contrasenaCorrecta = "arena"; // Cambia con tu contraseña
+            const contrasenaIngresada = document.getElementById("password").value;
 
-            if (passwordInserita === passwordCorretta) {
-                window.location.href = "list.html";  // Reindirizza alla pagina della lista
+            if (contrasenaIngresada === contrasenaCorrecta) {
+                window.location.href = "list.html";  // Redirige a la página de la lista
             } else {
-                alert("Password errata!");
+                alert("¡Contraseña incorrecta!");
             }
         }
     </script>
 </body>
 </html>
+
