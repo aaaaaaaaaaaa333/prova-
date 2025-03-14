@@ -8,15 +8,58 @@
 </head>
 <body>
     <div class="container">
-        <h2>REGISTRACION</h2>
+        <h2>REGISTRAZIONE</h2>
         <form id="registrationForm">
             <input type="text" id="username" placeholder="Username" required>
             <input type="email" id="email" placeholder="Email" required>
-            <button type="submit">Regístrate</button>
+            <button type="submit">Registrati</button>
         </form>
     </div>
-    <img id= "img1" src="oscar.png" alt="arena logo" width="300">
-    <script src="funzioni.js"></script>
 
+    <img id="img1" src="oscar.png" alt="arena logo" width="300">
+   
+    <script src="funzioni.js"></script>
+   
+    <script type="module">
+        // Importa Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
+
+        // Configurazione Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyAxKnsgnTZz0mZM88etFuD6WRv7KmpIVdU",
+            authDomain: "registracion-4198b.firebaseapp.com",
+            projectId: "registracion-4198b",
+            storageBucket: "registracion-4198b.appspot.com",
+            messagingSenderId: "885733863348",
+            appId: "1:885733863348:web:3f1bdf6e32f0cba0f4cce1"
+        };
+
+        // Inizializza Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Gestione della registrazione
+        document.getElementById("registrationForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const username = document.getElementById("username").value;
+            const email = document.getElementById("email").value;
+
+            try {
+                // Salva i dati in Firestore
+                await addDoc(collection(db, "users"), {
+                    username: username,
+                    email: email,
+                    timestamp: new Date()
+                });
+
+                alert("Registrazione completata!");
+                document.getElementById("registrationForm").reset();
+            } catch (error) {
+                alert("Errore: " + error.message);
+            }
+        });
+
+    </script>
 </body>
 </html>
