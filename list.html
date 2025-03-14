@@ -42,7 +42,7 @@
                 const userData = doc.data();
                 const li = document.createElement("li");
                 console.log(userData); // Debug: stampa i dati ricevuti
-                li.textContent = `Username: ${userData.username || "No data"}, Email: ${userData.email || "No data"}`;
+                li.textContent = `username: ${userData.username || "No data"}, email: ${userData.email || "No data"}`;
                 userList.appendChild(li);
             }); 
         }
