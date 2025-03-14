@@ -4,32 +4,32 @@ document.getElementById("registrationForm").addEventListener("submit", function(
     let username = document.getElementById("username").value;
     let email = document.getElementById("email").value;
 
-    // Controllo admin
+    // Verificación de admin
     admin(username, email);
 
-    // Salva l'utente nel localStorage
-    saveUser(username, email);
+    // Guarda el usuario en localStorage
+    guardarUsuario(username, email);
 
-    // Mostra un alert di registrazione
-    alert("Registrazione avvenuta con successo!");
+    // Muestra una alerta de registro exitoso
+    alert("¡Registro exitoso!");
 
-    // Resetta il modulo
+    // Restablece el formulario
     document.getElementById("registrationForm").reset();
 });
 
 function admin(username, email) {
     if (username === "admin" && email === "admin@es") {
-        window.location.href = 'admin.htm';  // Reindirizza all'admin
+        window.location.href = 'admin.htm';  // Redirige a la página de admin
     }
 }
 
-function saveUser(username, email) {
-    // Recupera la lista di utenti esistente o crea un array vuoto
-    let users = JSON.parse(localStorage.getItem("users")) || [];
+function guardarUsuario(username, email) {
+    // Recupera la lista de usuarios existente o crea un array vacío
+    let usuarios = JSON.parse(localStorage.getItem("users")) || [];
 
-    // Aggiungi il nuovo utente all'array
-    users.push({ username: username, email: email });
+    // Agrega el nuevo usuario al array
+    usuarios.push({ username: username, email: email });
 
-    // Salva l'array aggiornato nel localStorage
-    localStorage.setItem("users", JSON.stringify(users));
+    // Guarda el array actualizado en localStorage
+    localStorage.setItem("users", JSON.stringify(usuarios));
 }
