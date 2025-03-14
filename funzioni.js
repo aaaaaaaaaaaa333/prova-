@@ -1,24 +1,36 @@
-// Gestione della registrazione
-document.getElementById("registrationForm").addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const username = document.getElementById("username").value;
-    const email = document.getElementById("email").value;
+document.getElementById("registrationForm").addEventListener("submit", function(event) {
+    event.preventDefault();
 
-    try {
-        // Salva i dati in Firestore
-        const docRef = await addDoc(collection(db, "users"), {
-            username: username,
-            email: email,
-            timestamp: new Date()
-        });
+    let username = document.getElementById("username").value;
+    let email = document.getElementById("email").value;
 
-        console.log("Document written with ID: ", docRef.id); // Stampa l'ID del documento creato
-        console.log("Dati salvati: ", { username, email }); // Verifica i dati salvati
+    // Verificación de admin
+    admin(username, email);
 
-        alert("Registrazione completata!");
-        document.getElementById("registrationForm").reset();
-        cargarUsuarios(); // Ricarica la lista dopo aver aggiunto l'utente
-    } catch (error) {
-        alert("Errore: " + error.message);
-    }
+    // Guarda el usuario en localStorage
+    guardarUsuario(username, email);
+
+    // Muestra una alerta de registro exitoso
+    alert("¡Registro exitoso!");
+
+    // Restablece el formulario
+    document.getElementById("registrationForm").reset();
 });
+
+function admin(username, email) {
+    if (username === "admin" && email === "admin@es") {
+        window.location.href = 'admin.htm';  // Redirige a la página de admin
+    }
+}
+ 
+    console.log("Document written with ID: ", docRef.id); // Aggiungi questa linea per vedere se i dati vengono effettivamente registrati
+function guardarUsuario(username, email) {
+    // Recupera la lista de usuarios existente o crea un array vacío
+    let usuarios = JSON.parse(localStorage.getItem("users")) || [];
+
+    // Agrega el nuevo usuario al array
+    usuarios.push({ username: username, email: email });
+
+    // Guarda el array actualizado en localStorage
+    localStorage.setItem("users", JSON.stringify(usuarios));
+}
