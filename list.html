@@ -41,9 +41,9 @@
             querySnapshot.forEach((doc) => {
                 const userData = doc.data();
                 const li = document.createElement("li");
-                li.textContent = `Usuario: ${userData.username}, Correo: ${userData.email}`;
+                li.textContent = `Username: ${userData.username}, Email: ${userData.email}`;
                 userList.appendChild(li);
-            });
+            }); 
         }
 
         // Cargar los usuarios al inicio
