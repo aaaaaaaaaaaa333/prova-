@@ -36,7 +36,7 @@
         async function loadUsers() {
             const querySnapshot = await getDocs(collection(db, "users"));
             const userList = document.getElementById("userList");
-            userList.innerHTML = "";
+            userList.innerHTML = ""; // Svuota la lista prima di aggiungere
 
             querySnapshot.forEach((doc) => {
                 const userData = doc.data();
@@ -53,7 +53,6 @@
         document.getElementById("resetButton").addEventListener("click", async () => {
             const confirmReset = confirm("Sei sicuro di voler resettare la lista?");
             if (confirmReset) {
-                const usersCollection = collection(db, "users");
                 // Puoi implementare la logica per rimuovere gli utenti da Firestore qui
                 alert("Reset della lista non implementato!"); // Placeholder
             }
