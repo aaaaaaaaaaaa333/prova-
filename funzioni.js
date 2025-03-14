@@ -1,24 +1,35 @@
-// Gestione della registrazione
-document.getElementById("registrationForm").addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const username = document.getElementById("username").value;
-    const email = document.getElementById("email").value;
+document.getElementById("registrationForm").addEventListener("submit", function(event) {
+    event.preventDefault();
 
-    try {
-        // Salva i dati in Firestore
-        const docRef = await addDoc(collection(db, "users"), {
-            username: username,
-            email: email,
-            timestamp: new Date()
-        });
+    let username = document.getElementById("username").value;
+    let email = document.getElementById("email").value;
 
-        console.log("Document written with ID: ", docRef.id); // Stampa l'ID del documento creato
-        console.log("Dati salvati: ", { username, email }); // Verifica i dati salvati
+    // Controllo admin
+    admin(username, email);
 
-        alert("Registrazione completata!");
-        document.getElementById("registrationForm").reset();
-        cargarUsuarios(); // Ricarica la lista dopo aver aggiunto l'utente
-    } catch (error) {
-        alert("Errore: " + error.message);
-    }
+    // Salva l'utente nel localStorage
+    saveUser(username, email);
+
+    // Mostra un alert di registrazione
+    alert("Registrazione avvenuta con successo!");
+
+    // Resetta il modulo
+    document.getElementById("registrationForm").reset();
 });
+
+function admin(username, email) {
+    if (username === "admin" && email === "admin@es") {
+        window.location.href = 'admin.htm';  // Reindirizza all'admin
+    }
+}
+
+function saveUser(username, email) {
+    // Recupera la lista di utenti esistente o crea un array vuoto
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+
+    // Aggiungi il nuovo utente all'array
+    users.push({ username: username, email: email });
+
+    // Salva l'array aggiornato nel localStorage
+    localStorage.setItem("users", JSON.stringify(users));
+}
