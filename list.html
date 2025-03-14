@@ -3,25 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro</title>
+    <title>Registro de Inscritos</title>
     <link rel="stylesheet" href="stile.css">
 </head>
 <body>
-    <div class="container">
-        <h2>REGISTRACION</h2>
-        <form id="registrationForm">
-            <input type="text" id="username" placeholder="Usuario" required>
-            <input type="email" id="email" placeholder="Correo electrónico" required>
-            <button type="submit" class="btn-register">Registrarse</button>
-        </form>
+    <div class="container1">
+        <h2>LISTA DE INSCRITOS</h2>
+        <ul id="userList"></ul>
+        <button id="resetButton">Restablecer Lista</button>
     </div>
 
-    <img id="img1" src="oscar.png" alt="logo arena" width="300">
-    
     <script type="module">
         // Importar Firebase
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
-        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
+        import { getFirestore, collection, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
 
         // Configuración de Firebase
         const firebaseConfig = {
@@ -37,24 +32,33 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // Manejo del registro
-        document.getElementById("registrationForm").addEventListener("submit", async (e) => {
-            e.preventDefault();
-            const username = document.getElementById("username").value;
-            const email = document.getElementById("email").value;
+        // Función para cargar los usuarios registrados
+        async function cargarUsuarios() {
+            const querySnapshot = await getDocs(collection(db, "users"));
+            const userList = document.getElementById("userList");
+            userList.innerHTML = ""; // Vacía la lista antes de agregar
 
-            try {
-                // Guardar los datos en Firestore
-                await addDoc(collection(db, "users"), {
-                    username: username,
-                    email: email,
-                    timestamp: new Date()
+            querySnapshot.forEach((doc) => {
+                const userData = doc.data();
+                const li = document.createElement("li");
+                li.textContent = `Usuario: ${userData.username}, Correo: ${userData.email}`;
+                userList.appendChild(li);
+            });
+        }
+
+        // Cargar los usuarios al inicio
+        cargarUsuarios();
+
+        // Función para restablecer la lista
+        document.getElementById("resetButton").addEventListener("click", async () => {
+            const confirmReset = confirm("¿Estás seguro de que deseas restablecer la lista?");
+            if (confirmReset) {
+                const querySnapshot = await getDocs(collection(db, "users"));
+                querySnapshot.forEach(async (userDoc) => {
+                    await deleteDoc(doc(db, "users", userDoc.id));
                 });
-
-                alert("¡Registro completado!");
-                document.getElementById("registrationForm").reset();
-            } catch (error) {
-                alert("Error: " + error.message);
+                alert("¡Lista restablecida con éxito!");
+                cargarUsuarios(); // Recargar la lista para reflejar los cambios
             }
         });
     </script>
