@@ -8,48 +8,55 @@
 </head>
 <body>
     <div class="container1">
-        <h2>LISTA DE INSCRITOS</h2>
+        <h2>LISTA ISCRITTI</h2>
         <ul id="userList"></ul>
-
-        <!-- Aggiungi un pulsante per resettare la lista -->
         <button id="resetButton">Reset Lista</button>
     </div>
 
-    <script>
-        // Recupera i dati dal localStorage
-        let users = JSON.parse(localStorage.getItem("users")) || [];
+    <script type="module">
+        // Importa Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
 
-        // Ottieni il riferimento alla lista
-        let userList = document.getElementById("userList");
+        // Configurazione Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyAxKnsgnTZz0mZM88etFuD6WRv7KmpIVdU",
+            authDomain: "registracion-4198b.firebaseapp.com",
+            projectId: "registracion-4198b",
+            storageBucket: "registracion-4198b.appspot.com",
+            messagingSenderId: "885733863348",
+            appId: "1:885733863348:web:3f1bdf6e32f0cba0f4cce1"
+        };
 
-        // Funzione per aggiornare la lista degli utenti
-        function updateUserList() {
-            // Svuota la lista esistente
-            userList.innerHTML = '';
+        // Inizializza Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
 
-            // Aggiungi gli utenti alla lista
-            if (users.length === 0) {
-                userList.innerHTML = "<li>Ningún usuario registrado</li>";  // Messaggio se nessun utente è registrato
-            } else {
-                users.forEach(function(user) {
-                    let listItem = document.createElement("li");
-                    listItem.textContent = `Username: ${user.username}, Email: ${user.email}`;
-                    userList.appendChild(listItem);
-                });
-            }
+        // Funzione per caricare gli utenti registrati
+        async function loadUsers() {
+            const querySnapshot = await getDocs(collection(db, "users"));
+            const userList = document.getElementById("userList");
+            userList.innerHTML = "";
+
+            querySnapshot.forEach((doc) => {
+                const userData = doc.data();
+                const li = document.createElement("li");
+                li.textContent = `Username: ${userData.username}, Email: ${userData.email}`;
+                userList.appendChild(li);
+            });
         }
 
-        // Inizializza la lista degli utenti
-        updateUserList();
+        // Carica gli utenti all'avvio
+        loadUsers();
 
-        // Aggiungi un evento al pulsante di reset
-        document.getElementById("resetButton").addEventListener("click", function() {
-            // Rimuove gli utenti dal localStorage
-            localStorage.removeItem("users");
-
-            // Rinfresca la lista degli utenti
-            users = [];
-            updateUserList();
+        // Pulsante per resettare la lista (opzionale)
+        document.getElementById("resetButton").addEventListener("click", async () => {
+            const confirmReset = confirm("Sei sicuro di voler resettare la lista?");
+            if (confirmReset) {
+                const usersCollection = collection(db, "users");
+                // Puoi implementare la logica per rimuovere gli utenti da Firestore qui
+                alert("Reset della lista non implementato!"); // Placeholder
+            }
         });
     </script>
 </body>
