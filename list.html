@@ -34,17 +34,28 @@
 
         // Función para cargar los usuarios registrados
         async function cargarUsuarios() {
-            const querySnapshot = await getDocs(collection(db, "users"));
-            const userList = document.getElementById("userList");
-            userList.innerHTML = ""; // Vacía la lista antes de agregar
+            try {
+                const querySnapshot = await getDocs(collection(db, "users"));
+                const userList = document.getElementById("userList");
+                userList.innerHTML = ""; // Vacía la lista antes de agregar
 
-            querySnapshot.forEach((doc) => {
-                const userData = doc.data();
-                const li = document.createElement("li");
-                console.log(userData); // Debug: stampa i dati ricevuti
-                li.textContent = `username: ${userData.username || "No data"}, email: ${userData.email || "No data"}`;
-                userList.appendChild(li);
-            }); 
+                querySnapshot.forEach((doc) => {
+                    const userData = doc.data();
+                    const li = document.createElement("li");
+                    console.log(userData); // Debug: stampa i dati ricevuti
+                    li.textContent = `username: ${userData.username || "No data"}, email: ${userData.email || "No data"}`;
+                    userList.appendChild(li);
+                });
+
+                if (userList.children.length === 0) {
+                    const li = document.createElement("li");
+                    li.textContent = "Ningún usuario registrado.";
+                    userList.appendChild(li);
+                }
+            } catch (error) {
+                console.error("Error al cargar los usuarios: ", error);
+                alert("Error al cargar los usuarios. Verifica la consola para más detalles.");
+            }
         }
 
         // Cargar los usuarios al inicio
@@ -54,15 +65,18 @@
         document.getElementById("resetButton").addEventListener("click", async () => {
             const confirmReset = confirm("¿Estás seguro de que deseas restablecer la lista?");
             if (confirmReset) {
-                const querySnapshot = await getDocs(collection(db, "users"));
-                querySnapshot.forEach(async (userDoc) => {
-                    await deleteDoc(doc(db, "users", userDoc.id));
-                });
-                alert("¡Lista restablecida con éxito!");
-                cargarUsuarios(); // Recargar la lista para reflejar los cambios
+                try {
+                    const querySnapshot = await getDocs(collection(db, "users"));
+                    const deletePromises = querySnapshot.docs.map(userDoc => deleteDoc(doc(db, "users", userDoc.id)));
+                    await Promise.all(deletePromises); // Esperar a que se eliminen todos los documentos
+                    alert("¡Lista restablecida con éxito!");
+                    cargarUsuarios(); // Recargar la lista para reflejar los cambios
+                } catch (error) {
+                    console.error("Error al restablecer la lista: ", error);
+                    alert("Error al restablecer la lista. Verifica la consola para más detalles.");
+                }
             }
         });
     </script>
 </body>
 </html>
-
