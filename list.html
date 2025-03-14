@@ -41,7 +41,8 @@
             querySnapshot.forEach((doc) => {
                 const userData = doc.data();
                 const li = document.createElement("li");
-                li.textContent = `Username: ${userData.username}, Email: ${userData.email}`;
+                console.log(userData); // Debug: stampa i dati ricevuti
+                li.textContent = `Username: ${userData.username || "No data"}, Email: ${userData.email || "No data"}`;
                 userList.appendChild(li);
             }); 
         }
