@@ -8,16 +8,14 @@
 </head>
 <body>
     <div class="container">
-        <h2>REGISTRACION3</h2>
+        <h2>REGISTRACION</h2>
         <form id="registrationForm">
-            <input type="text" id="username" placeholder="username" required>
-            <input type="email" id="email" placeholder="email" required>
+            <input type="text" id="username" placeholder="Username" required>
+            <input type="email" id="email" placeholder="Email" required>
             <button type="submit" class="btn-register">Registrate</button>
         </form>
     </div>
 
-    <img id="img1" src="oscar.png" alt="arena logo" width="300">
-    
     <script type="module">
         // Importa Firebase
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
@@ -45,19 +43,20 @@
 
             try {
                 // Salva i dati in Firestore
-                await addDoc(collection(db, "users"), {
+                const docRef = await addDoc(collection(db, "users"), {
                     username: username,
                     email: email,
                     timestamp: new Date()
                 });
 
-                alert("Registracion completata!");
+                console.log("Document written with ID: ", docRef.id); // Aggiungi questa linea per vedere se i dati vengono effettivamente registrati
+
+                alert("Registrazione completata!");
                 document.getElementById("registrationForm").reset();
             } catch (error) {
                 alert("Errore: " + error.message);
             }
         });
     </script>
-   <script src="funzioni.js"></script>
 </body>
 </html>
