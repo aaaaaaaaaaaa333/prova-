@@ -16,6 +16,7 @@
         </form>
     </div>
 
+    <script type="module" src="funzioni.js"></script>
     <script type="module">
         // Importa Firebase
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
@@ -35,9 +36,16 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
+        // Variabile per gestire l'invio
+        let isSubmitting = false;
+
         // Gestione della registrazione
         document.getElementById("registrationForm").addEventListener("submit", async (e) => {
             e.preventDefault();
+
+            if (isSubmitting) return; // Esci se già in fase di invio
+            isSubmitting = true; // Imposta il flag
+
             const username = document.getElementById("username").value;
             const email = document.getElementById("email").value;
 
@@ -49,16 +57,15 @@
                     timestamp: new Date()
                 });
 
-                console.log("Document written with ID: ", docRef.id); // Aggiungi questa linea per vedere se i dati vengono effettivamente registrati
-
+                console.log("Document written with ID: ", docRef.id);
                 alert("Registrazione completata!");
                 document.getElementById("registrationForm").reset();
             } catch (error) {
                 alert("Errore: " + error.message);
+            } finally {
+                isSubmitting = false; // Resetta il flag al termine
             }
         });
     </script>
-    <script src="funzioni.js" type="module"></script>
-
 </body>
 </html>
