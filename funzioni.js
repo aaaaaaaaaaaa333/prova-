@@ -1,9 +1,10 @@
-// Importazioni all'inizio del file
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
-import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
+let isSubmitting = false;
 
 document.getElementById("registrationForm").addEventListener("submit", async (e) => {
     e.preventDefault(); // Previene il comportamento predefinito del form
+
+    if (isSubmitting) return; // Se è già in fase di invio, esci dalla funzione
+    isSubmitting = true; // Imposta il flag di invio
 
     const username = document.getElementById("username").value.trim();
     const email = document.getElementById("email").value.trim();
@@ -12,6 +13,7 @@ document.getElementById("registrationForm").addEventListener("submit", async (e)
     if (username === "admin" && email === "admin@es") {
         console.log("Accesso admin, reindirizzamento...");
         window.location.href = "admin.html";  // Assicurati che il file esista
+        isSubmitting = false; // Resetta il flag prima di uscire
         return; // Termina l'esecuzione se l'utente è admin
     }
 
@@ -44,6 +46,8 @@ document.getElementById("registrationForm").addEventListener("submit", async (e)
     } catch (error) {
         console.error("❌ Errore durante la registrazione:", error);
         alert("Errore: " + error.message);
+    } finally {
+        isSubmitting = false; // Resetta il flag al termine della registrazione
     }
 });
 
