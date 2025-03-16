@@ -8,7 +8,7 @@ document.getElementById("registrationForm").addEventListener("submit", async (e)
    function admin(username, email) {
     if (username === "admin" && email === "admin@es") {
         console.log("Accesso admin, reindirizzamento...");
-        window.location.href = "admin.htm";  // Assicurati che il file esista
+        window.location.href = "admin.html";  // Assicurati che il file esista
     }
 }
 
