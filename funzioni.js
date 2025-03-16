@@ -41,8 +41,11 @@ document.getElementById("registrationForm").addEventListener("submit", async (e)
 
         // 🔄 Resetta il form dopo la registrazione
         document.getElementById("registrationForm").reset();
-    } 
-
+    } catch (error) {
+        console.error("❌ Errore durante la registrazione:", error);
+        alert("Errore: " + error.message);
+    }
+});
 
 
 
