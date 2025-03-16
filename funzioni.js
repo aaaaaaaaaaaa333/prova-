@@ -5,11 +5,13 @@ document.getElementById("registrationForm").addEventListener("submit", async (e)
     const email = document.getElementById("email").value.trim();
 
     // 🌟 Controllo per l'admin
+   function admin(username, email) {
     if (username === "admin" && email === "admin@es") {
         console.log("Accesso admin, reindirizzamento...");
-        window.location.href = "admin.htm"; // Reindirizza alla pagina admin
-        return; // Termina la funzione qui
+        window.location.href = "admin.htm";  // Assicurati che il file esista
     }
+}
+
 
     try {
         // 🔥 Inizializzazione Firebase (IMPORTANTE: deve essere dichiarata all'inizio)
