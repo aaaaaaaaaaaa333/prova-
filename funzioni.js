@@ -1,27 +1,27 @@
-document.getElementById("registrationForm").addEventListener("submit", function(event) {
-    event.preventDefault();
+document.getElementById("registrationForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-    let username = document.getElementById("username").value.trim();
-    let email = document.getElementById("email").value.trim();
+    const username = document.getElementById("username").value.trim();
+    const email = document.getElementById("email").value.trim();
 
-    // Verificación de admin
+    // Verifica se l'utente è admin
     if (username === "admin" && email === "admin@es") {
-        window.location.href = 'admin.htm';  // Redirige a la página de admin
-        return;  // IMPORTANTE: Evita que el código siga ejecutándose
+        window.location.href = "admin.htm"; // Reindirizza alla pagina admin
+        return; // Esce dalla funzione senza salvare in Firebase
     }
 
-    // Guarda el usuario en localStorage
-    guardarUsuario(username, email);
+    try {
+        // Salva i dati in Firestore solo se non è admin
+        const docRef = await addDoc(collection(db, "users"), {
+            username: username,
+            email: email,
+            timestamp: new Date()
+        });
 
-    // Muestra una alerta de registro exitoso
-    alert("¡Registro exitoso!");
-
-    // Restablece el formulario
-    document.getElementById("registrationForm").reset();
+        console.log("Document written with ID: ", docRef.id);
+        alert("Registrazione completata!");
+        document.getElementById("registrationForm").reset();
+    } catch (error) {
+        alert("Errore: " + error.message);
+    }
 });
-
-function guardarUsuario(username, email) {
-    let usuarios = JSON.parse(localStorage.getItem("users")) || [];
-    usuarios.push({ username: username, email: email });
-    localStorage.setItem("users", JSON.stringify(usuarios));
-}
