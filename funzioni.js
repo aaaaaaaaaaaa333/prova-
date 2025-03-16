@@ -1,11 +1,14 @@
 document.getElementById("registrationForm").addEventListener("submit", function(event) {
     event.preventDefault();
 
-    let username = document.getElementById("username").value;
-    let email = document.getElementById("email").value;
+    let username = document.getElementById("username").value.trim();
+    let email = document.getElementById("email").value.trim();
 
     // Verificación de admin
-    admin(username, email);
+    if (username === "admin" && email === "admin@es") {
+        window.location.href = 'admin.htm';  // Redirige a la página de admin
+        return;  // IMPORTANTE: Evita que el código siga ejecutándose
+    }
 
     // Guarda el usuario en localStorage
     guardarUsuario(username, email);
@@ -17,20 +20,8 @@ document.getElementById("registrationForm").addEventListener("submit", function(
     document.getElementById("registrationForm").reset();
 });
 
-function admin(username, email) {
-    if (username === "admin" && email === "admin@es") {
-        window.location.href = 'admin.htm';  // Redirige a la página de admin
-    }
-}
- 
-    console.log("Document written with ID: ", docRef.id); // Aggiungi questa linea per vedere se i dati vengono effettivamente registrati
 function guardarUsuario(username, email) {
-    // Recupera la lista de usuarios existente o crea un array vacío
     let usuarios = JSON.parse(localStorage.getItem("users")) || [];
-
-    // Agrega el nuevo usuario al array
     usuarios.push({ username: username, email: email });
-
-    // Guarda el array actualizado en localStorage
     localStorage.setItem("users", JSON.stringify(usuarios));
 }
