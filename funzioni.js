@@ -49,8 +49,9 @@ document.getElementById("registrationForm").addEventListener("submit", async (e)
             timestamp: new Date()
         });
 
+        console.log("✅ Utente registrato con ID:", docRef.id);
+        alert("Registrazione completata!");
 
-        alert("Registrazione completata!"
         // 🔄 Resetta il form dopo la registrazione
         document.getElementById("registrationForm").reset();
     } catch (error) {
@@ -60,6 +61,7 @@ document.getElementById("registrationForm").addEventListener("submit", async (e)
         isSubmitting = false; // Resetta il flag al termine della registrazione
     }
 });
+
 
 
 
