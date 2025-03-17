@@ -60,6 +60,8 @@ button:hover {
 #img1 {
     margin-top: 200px; /* Distanza tra il container e l'immagine */
     background-position: center;
+    width: 50px;
+    height: 50px;
  
 }
 .container {
