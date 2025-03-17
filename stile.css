@@ -61,8 +61,7 @@ button:hover {
     imageurl:'oscar.png'
     margin-top: 200px; /* Distanza tra il container e l'immagine */
     background-position: center;
-    width: 250px;
-    height: 250px;
+
  
 }
 .container {
